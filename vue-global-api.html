@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue global API</title>
+</head>
+<body>
+
+	<div id = "mount-point"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		// extend - Create a "subclass" of the base Vue constructor. The argument should be an object containing component options
+		// data option - it must be a function when used with Vue.extend()
+		var profile = Vue.extend({
+			template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+			data: function () {
+				return {
+					firstName: 'Mainul',
+					lastName: 'Hasan',
+					alias: 'Mithu'
+				}
+			}
+		})
+
+		// create an instance of profile and mount it on an element
+		new profile().$mount('#mount-point')
+	</script>
+</body>
+</html>

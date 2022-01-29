@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Difference between new and export default</title>
+</head>
+<body>
+	 <div id="app"></div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		// Vue instance that the rest of the application descends from. This hangs off the root element declared in an html document.
+		new Vue({
+		    el: '#app',
+		    data () {
+		      return {}
+		    }
+		)}
+
+		// my-component.js
+		// declaring a component which can be registered and reused later. If we create a single file component like:
+		// my-component.js
+		export default {
+		    name: 'my-component',
+		    data () {
+		      return {}
+		    }
+		}
+
+		// another-component.js
+		// <template>
+		//   <my-component></my-component>
+		// </template>
+		
+		import myComponent from 'my-component'
+		  export default {
+		    components: {
+		      myComponent
+		    }
+		    data () {
+		      return {}
+		    }
+		  }
+	</script>
+</body>
+</html>

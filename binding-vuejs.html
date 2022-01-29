@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Binding VueJS</title>
+	 <style>
+         .info {
+            color: #00529B;
+            background-color: #BDE5F8;
+         }
+         div {
+            margin: 10px 0;
+            padding: 12px;
+            font-size : 25px;
+         }
+         .active {
+            color: #4F8A10;
+            background-color: #DFF2BF;
+         }
+         .displayError{
+            color: #D8000C;
+            background-color: #FFBABA;
+         }
+      </style>
+</head>
+<body>
+	<!-- v-bind : mainipulate or assign values to HTML attributes, change the style, and assign classes -->
+	<div id = "databinding">
+		{{title}}
+
+		<br/>
+		<!-- <a href="hreflink" target="_blank"> Click Me </a><br> -->
+		<!-- <a href="{{hreflink}}" target="_blank">Click Me </a><br> -->
+		<a v-bind:href = "hreflink" target="_blank">Click Me </a><br>
+		<!-- shorthand -->
+		<a :href = "hreflink" target="_blank">Click Me </a><br>
+	</div>
+
+	<!-- Binding HTML Classes -->
+	<div id = "classbinding">
+		<div class="info" v-bind:class = "{active:isActive, displayError : hasError}">
+			{{title}}
+		</div>
+	</div>
+
+	<div id = "classbindingarray">
+		<div v-bind:class = "[infoclass, errorclass]">{{title}}</div>
+	</div>
+
+	<div id = "classbindingconditional">
+		<div v-bind:class = "[isActive ? infoclass : '', hasError ? errorclass : '']">{{title}}</div>
+	</div>
+
+	<div id = "classbindingcomponent">
+		<new_component v-bind:class = "{active:isActive}"></new_component>
+	</div>
+
+	<!-- Binding Inline Styles -->
+	<div id = "databindinginline">
+		<div v-bind:style = "{ color : activeColor, fontSize: fontSize + 'px' }">{{title}}</div>
+	</div>
+
+	<!-- Form Input Bindings -->
+	<!-- v-model binding the input text element and the value binded to a variable assigned -->
+	<div id = 'formbinding'>
+		<h3>Textbox</h3>
+		<input v-model = "name" placeholder = "Enter Name" />
+		<h3>Name entered is : {{name}}</h3>
+		<hr/>
+		<h3>Textarea</h3>
+		<textarea v-model = "textmessage" placeholder = "Add Details"></textarea>
+		<h1><p>{{textmessage}}</p></h1>
+		<hr/>
+		<h3>Checkbox</h3>
+		<input type="checkbox" id = "checkbox" v-model = "checked"> {{checked}}
+		<br>
+		<h3>Radio</h3>
+		<input type = "radio" id = "black" value = "Black" v-model = "picked">Black
+		<input type="radio" id = "white" value = "White" v-model = "picked">White
+		<h3>Radio element clicked : {{picked}}</h3>
+		<hr>
+		<h3>Select</h3>
+		<select v-model = "languages">
+			<option disabled value = "">Please select one</option>
+			<option>Java</option>
+			<option>JavaScript</option>
+			<option>PHP</option>
+			<option>C</option>
+			<option>C++</option>
+		</select>
+		<h3>Languages Selected is : {{languages}} </h3>
+		<hr>
+	</div>
+
+	<!-- Modifiers -->
+	<div id = "modifiers">
+		<!-- Number modifier allows to only enter numbers. It will not take any other input besides numbers. -->
+		<span style="font-size: 25px;">Enter Age:</span> <input v-model.number = "age" type="number">
+		<br>
+		<!-- Lazy modifier will display the content present in the textbox once it is fully entered and the user leaves the textbox. -->
+		<span style="font-size: 25px;">Enter Message:</span> <input v-model.lazy = "msg">
+		<h3>Display Message : {{msg}}</h3>
+		<br>
+		<!-- Trim modifier will remove any spaces entered at the start and at the end. -->
+		<span style="font-size: 25px">Enter Message:</span> <input v-model.trim = "message">
+		<h3>Display Message: {{message}}</h3>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#databinding',
+			data: {
+				title : "DATA BINDING",
+				hreflink : "http://www.google.com"
+			}
+		});
+
+		var vmm = new Vue({
+			el : '#classbinding',
+
+			data : {
+				title : "Class Binding",
+				isActive : true,
+				hasError : true
+			}
+		})
+
+		var vm_arr = new Vue({
+			el : '#classbindingarray',
+
+			data : {
+				title : 'This is class binding example of array',
+				infoclass : 'info',
+				errorclass : 'displayError'
+			}
+		})
+
+		var vm_arr_con = new Vue({
+			el : '#classbindingconditional',
+
+			data : {
+				title : 'This is class binding example of conditional',
+				infoclass : 'info',
+				errorclass : 'displayError',
+				isActive : true,
+				hasError : true
+			}
+		});
+
+		var vm_component = new Vue({
+			el : '#classbindingcomponent',
+
+			data : {
+				title : 'This is class binding example of component',
+				infoclass : 'info',
+				errorclass : 'displayError',
+				isActive : true,
+				haserror : true
+			},
+
+			components: {
+				'new_component' : {
+					template : '<div class = "info">Class binding for component</div>'
+				}
+			}
+		})
+
+		var vm_data_bind = new Vue({
+			el : '#databindinginline',
+
+			data : {
+				title : "Inline style Binding",
+				activeColor : 'red',
+				fontSize : '30'
+			}
+		});
+
+		var vm_form = new Vue({
+			el : '#formbinding',
+
+			data : {
+				name : '',
+				textmessage : '',
+				checked : false,
+				picked : 'White',
+				languages : 'Java'
+			}
+		});
+
+		var vm_modifiers = new Vue({
+			el : '#modifiers',
+
+			data : {
+				age : 0,
+				msg : '',
+				message : ''
+			}
+		})
+	</script>
+</body>
+</html>

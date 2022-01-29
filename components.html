@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Components in Vue JS</title>
+</head>
+<body>
+	<!-- creates custom elements, which can be reused in HTML -->
+	<!-- To create a component, following is the syntax. -->
+	<!-- Vue.component('nameofthecomponent',{ // options}); -->
+	<div id = "component_test">
+		<testcomponent></testcomponent>
+	</div>
+	<div id = "component_test1">
+		<testcomponent></testcomponent>
+	</div>
+	<!-- Dynamic Components : created using the keyword <component> </component> -->
+	<div id = "databinding">
+		<component v-bind:is = "views"></component>
+	</div>
+	<!-- Dynamic component is created using the following syntax. -->
+	<!-- <component v-bind:is = "view"></component> It has v-bind:is = ”view”, and a value view is assigned to it. -->
+
+	<!-- <div id="components-demo">
+	  <button-counter></button-counter>
+	</div> -->
+
+	<div id="components-demo">
+	  <button-counter></button-counter>
+	  <button-counter></button-counter>
+	  <button-counter></button-counter>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		// This is a way of registering a global component, which can be made a part of any vue instance
+		// Vue.component('testcomponent', {
+		// 	template : '<div><h1>This is coming from component</h1></div>'
+		// });
+
+		// var vm = new Vue({
+		// 	el: '#component_test'
+		// });
+
+		// var vm1 = new Vue({
+		// 	el: '#component_test1'
+		// });
+
+		// local registration and the components will be a part of only the vue instance created.
+		// var vm2 = new Vue({
+		//    el: '#component_test',
+		//    components:{
+		//       'testcomponent': {
+		//          template : '<div><h1>This is coming from component</h1></div>'
+		//       }
+		//    }
+		// });
+
+		Vue.component('testcomponent', {
+			template : '<div v-on:mouseover = "changename()" v-on:mouseout = "originalname();"><h1>Custom Component created by <span id = "name">{{name}}</span></h1></div>',
+			data: function() {
+				return {
+					name : "Mainul"
+				}
+			},
+			methods: {
+				changename: function() {
+					this.name = "Mehedi";
+				},
+				originalname: function() {
+					this.name = "Mainul";	
+				}
+			}
+		});
+
+		var vm = new Vue({
+			el: '#component_test'
+		});
+
+		var vm1 = new Vue({
+			el: '#component_test1'
+		});
+
+		var vm2 = new Vue({
+			el: '#databinding',
+			data: {
+				views: 'component1'
+			},
+			components: {
+				'component1': {
+					template: '<div><span style = "font-size:25;color:red;">Dynamic Component</span></div>'
+				}
+			}
+		});
+
+		// Define a new component called button-counter
+		Vue.component('button-counter', {
+		  data: function () {
+		    return {
+		      count: 0
+		    }
+		  },
+		  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+		})
+
+		new Vue({ el: '#components-demo' });
+
+		// A component’s data option must be a function, so that each instance can maintain an independent copy of the returned data object
+		
+	</script>
+</body>
+</html>

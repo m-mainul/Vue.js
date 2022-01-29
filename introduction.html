@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue js Basics</title>
+</head>
+<body>
+	
+	<!-- All directives in Vue start with v- e.g. v-model -->
+	<!-- v- denotes its Vue -->
+	<div id = "root">
+		<!-- if we use value to the input then we need to use model directory -->
+		<input type="text" id="input" v-model="message">
+
+		<p>The value of the input is: {{message}}.</p>
+	</div>
+
+	<div id = "intro" style="text-align: center;">
+		<h1>{{ message }}</h1>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	
+	<script type="text/javascript">
+		// let data = {
+		// 	message : 'Hello world' 
+		// };
+
+		// Create Vue instance
+		// new Vue({
+		// 	// Surface area of the Vue and binding data with this surface area
+		// 	el : '#root',
+		// 	// Speify the data
+		// 	data : data
+		// })
+
+		// We can also use data in inline like that
+		new Vue({
+			el : '#root',
+
+			data : {
+				message : 'Hello World'
+			}
+		});
+
+		new Vue({
+			el : '#intro',
+
+			data : {
+				message : 'Welcome in Vue Tutorial'
+			}
+		})
+
+		// {{}} - interpolation which is interact with VueJS and prints the data in the browser.
+		// To get the value of the message in the DOM, we need to create an instance of VueJS
+		// #intro is the surface with this our Vue is interacting
+	</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div  id = "vue_det">
+		<h1>Firstname : {{firstname}} </h1>
+		<h1>Lastname : {{lastname}} </h1>
+		<h1>{{mydetails()}}</h1>
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el : "#vue_det",
+
+		data : {
+			firstname : "Moinul",
+			lastname : "Hasan",
+			address : "NNS Solution Ltd"
+		},
+
+		methods : {
+			mydetails : function() {
+				return "I am " + this.firstname + " " + this.lastname;
+			}
+		}
+	});
+
+	var _obj = { fname : "Moinul", lname : "Hasan"}
+
+	// direct instance creation 
+	var vm = new Vue({
+		data : _obj
+	});
+
+	console.log(vm.fname);
+	console.log(vm.$data);
+	console.log(vm.$data.fname);
+
+
+	// must use function in Vue.extend()
+	var Component = Vue.extend({
+		data : function() {
+			return _obj
+		}
+	});
+
+	var myComponentInstance = new Component();
+	console.log(myComponentInstance.lname);
+	console.log(myComponentInstance.$data);
+
+	// Props - is an array of string or object. Takes an array-based or object-based syntax.
+
+
+	// el is the parameter of the Vue and takes the id of the DOM element
+	// data - this can be an object or a function. Vue converts its properties to getters/setters to make it reactive.
+	// In case of a component, the data is a function, which is used with Vue.extend
+	/*
+	data : function () {
+		return _obj
+	}
+	*/
+	// To refer to the data from the component, we need to create an instance of it
+	// var myComponentInstance = new Component();
+</script>
+</body>
+</html>

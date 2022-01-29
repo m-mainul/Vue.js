@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Conditional Rendering in Vue JS</title>
+</head>
+<body>
+
+	<div id = "databinding">
+		<button v-on:click = "showdata" v-bind:style = "styleobj">Click Me</button>
+		<span style="font-size: 25px"><b>{{show}}</b></span>
+		<h1 v-if = "show">This is h1 tag</h1>
+		<h2 v-else>This is h2 tag</h2>
+
+		<div v-show = "show">
+			<b>V-Show:</b>
+			<img src="images/vue-logo.png" width = "100" height = "100">
+		</div>
+	</div>
+
+	<br><br>
+
+	<div id = "list-rendering">
+		<input v-on:keyup.enter = "showinputvalue" v-bind:style = "styleobj" placeholder = "Enter Fruits Names" />
+		<h1 v-if = "items.length > 0">Display Fruits Name</h1>
+		<ul>
+			<!-- <li v-for = "a in items">{{a}}</li> -->
+			<li v-for = "(a, index) in items">{{index}}----{{a}}</li>
+		</ul>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		// v-if
+		// difference between v-if and v-show is that v-if removes the element from the dom if the condition is false,
+		// and adds it back if the condition is true whereas v-show hides the element, if the condition is false, and 
+		// adds it back if the condition is true. Thus, the element is present in the dom always.
+		var vm = new Vue({
+			el : '#databinding',
+
+			data : {
+				show : true,
+				styleobj : {
+					backgroundcolor : '#2196F3!important',
+					cursor : 'pointer',
+					padding : '8px 16px',
+					verticalAlign : 'middle',
+				}
+			},
+
+			methods : {
+				showdata : function() {
+					this.show = !this.show;
+				}
+			}
+		})
+
+		var list_rend = new Vue({
+			el : '#list-rendering',
+
+			data : {
+				items : [],
+				styleobj : {
+					width : "30%",
+					padding : "12px 20px",
+					margin : "8px 0",
+					boxSizing: "border-box"
+				}
+			},
+
+			methods : {
+				showinputvalue : function(event) {
+					this.items.push(event.target.value);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

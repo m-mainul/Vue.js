@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VueJS Template</title>
+</head>
+<body>
+	<div id = "vue_det">
+		<h1>Firstname : {{firstname}}</h1>
+		<h1>Lastname : {{lastname}}</h1>
+		<!-- <div>{{htmlcontent}}</div> This won't render html instead directly print the html -->
+		<div v-html = "htmlcontent"></div> <!-- This will render the html content; Vue now knows it has to output it as HTML content -->
+		<img v-bind:src = "imgSrc" width="300" height="250"> <!-- To assign any attribute to HTML tag, we need to use v-bind dirctive -->
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el : '#vue_det',
+			data : {
+				firstname : "Moinul",
+				lastname : "Hasan",
+				htmlcontent : "<div><h1>Vue Js Template</h1></div>",
+				imgSrc : "images/vue-logo.png"
+			}
+		})
+	</script>
+</body>
+</html>

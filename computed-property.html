@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Computed Property</title>
+</head>
+<body>
+	<div id="root">
+		<!-- For any complex logic, we should use a computed property -->
+		<h1>All Tasks</h1>
+		<ul>
+			<!-- filter task by if condition -->
+			<!-- <li v-for="task in tasks" v-if="task.completed" v-text="task.description"></li> -->
+			<li v-for="task in tasks" v-text="task.description"></li>
+		</ul>
+
+		<h2>All Tasks</h2>
+		<ul>
+			<li v-for="task in incompleteTasks" v-text="task.description"></li>
+		</ul>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#root',
+
+			data: {
+				tasks: [
+					{ description: 'Go to the store', completed: true},
+					{ description: 'Finish screencast', completed: false},
+					{ description: 'Make donation', completed: false},
+					{ description: 'Clear inbox', completed: false},
+					{ description: 'Make dinner', completed: false},
+					{ description: 'Clean room', completed: true}
+				]
+			},
+
+			computed: {
+				incompleteTasks() {
+					return this.tasks.filter(task => ! task.completed);
+					
+					// Same thing as above
+					// this.tasks.filter(function (task)) {
+					// 	return ! task.completed;
+					// }
+				}
+			}
+		});
+	</script>
+</body>
+</html>

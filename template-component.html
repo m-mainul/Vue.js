@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Different ways to define a component template in Vue JS</title>
+</head>
+<body>
+
+	<div id = "string-component">
+		<my-checkbox></my-checkbox>
+	</div>
+
+	<div id = "template-literals">
+		<template-literals></template-literals>
+	</div>
+
+	<div id = "x-templates">
+		<x-templates></x-templates>
+	</div>
+	
+	<div id = "inline-template">
+		<inlinetemplate inline-template>
+			<div class="checkbox-wrapper" @click="check">
+				<div :class="{ checkbox: true, checked: checked }"></div>
+				<div class="title"></div>
+			</div>
+		</inlinetemplate>
+	</div>
+
+	<div id = "render-functions">
+		<render-functions></render-functions>
+	</div>
+
+	<!-- <div id = "jsxx">
+		<jsx></jsx>
+	</div> -->
+
+	<template>
+	  <div class="checkbox-wrapper" @click="check">
+	    <div :class="{ checkbox: true, checked: checked }"></div>
+	    <div class="title"></div>
+	  </div>
+	</template>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/x-template" id="checkbox-template">
+		<div class="checkbox-wrapper" @click="check">
+			<div :class="{ checkbox: true, checked: checked }"></div>
+			<div class="title"></div>
+		</div>
+	</script>
+
+	<script type="text/javascript">
+		// Strings
+		Vue.component('my-checkbox', {
+			template: `<div class="checkbox-wrapper" @click="check"><div :class="{ checkbox: true, checked: checked }"></div><div class="title"></div></div>`,
+			data() {
+				return { checked: false, title: 'Check me' }
+			},
+			methods: {
+				check() { this.checked = !this.checked; }
+			}
+		});
+
+		new Vue({ el : '#string-component' })
+
+		// Template Literals
+		// ES6 template literals (“backticks”) allow you to define your template across multiple lines, something you can’t do in a regular Javascript string. 
+		Vue.component('template-literals', {
+			template: `<div class="checkbox-wrapper" @click="check">
+							<div :class="{ checkbox: true, checked: checked }"></div>
+							<div class="title"></div>
+						</div>`,
+			data() {
+				return { checked: false, title: 'Check me' }
+			},
+			methods: {
+				check() { this.checked = !this.checked; }
+			}
+		});
+		new Vue({ el : '#template-literals' })
+
+		// X-Templates
+		// With this method your template is defined inside a script tag in the index.html file. Th script tag is marked with text/x-template and referenced by an id in your component definition.
+		Vue.component('x-templates', {
+			template: '#checkbox-template',
+			data() {
+				return { checked: false, title: 'Check me' }
+			},
+			methods: {
+				check() { this.checked = !this.checked; }
+			}
+		});
+		new Vue({ el : '#x-templates' })
+
+		// Inline Templates
+		// By adding the inline-template attribute to a component, you indicate to Vue that the inner content is its template, rather than treating it as distributed content
+		Vue.component('inlinetemplate', {
+			data() {
+				return { checked: false, title: 'Check me' }
+			},
+			methods: {
+				check() { this.checked = !this.checked; }
+			}
+		});
+		new Vue({ el : '#inline-template' })
+
+		// Render functions
+		// Render functions require you to define your template as a Javascript object.
+		Vue.component('render-functions', {
+			data() {
+				return { checked: false, title: 'Check me' }
+			},
+			methods: {
+				check() { this.checked = !this.checked; }
+			},
+			render(createElement) {
+				return createElement(
+					'div',
+				  	{
+							attrs: {
+								'class': 'checkbox-wrapper'
+							},
+							on: {
+								click: this.check
+							}
+				  	},
+				  	[
+				    	createElement(
+			      		'div',
+			      		{
+			        		'class': {
+			        			checkbox: true,
+			        			checked: this.checked
+		        			}
+			      		}
+				    	),
+				    	createElement(
+			      		'div',
+			      		{
+			        		attrs: {
+			          		'class': 'title'
+			        		}
+			      		},
+			      		[ this.title ]
+				    	)
+				  	]
+				);
+			}
+		});
+		new Vue({ el : '#render-functions' })
+
+		// Vue.component('jsx', {
+		// 	data() {
+		// 		return { checked: false, title: 'Check me' }
+		// 	},
+		// 	methods: {
+		// 		check() { this.checked = !this.checked; }
+		// 	},
+		// 	render() {
+		// 		return <div class="checkbox-wrapper" onClick={ this.check }>
+		// 		         <div class={{ checkbox: true, checked: this.checked }}></div>
+		// 		         <div class="title">{ this.title }</div>
+		// 		       </div>
+		// 	}
+		// });
+
+		// new Vue({ el : '#jsxx' })
+		
+		// Single File Components
+		// So long as you are comfortable with using a build tool in your setup, Single File Components are the king of template options. They bring the best of both worlds: allowing you to write markup while keeping all your component defintion in one file.
+		export default {
+		    data() {
+		      return { checked: false, title: 'Check me' }
+		    },
+		    methods: {
+		      check() { this.checked = !this.checked; }
+		    }
+		}
+
+	</script>
+</body>
+</html>

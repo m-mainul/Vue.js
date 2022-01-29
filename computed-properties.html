@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Computed Propeties</title>
+</head> 
+<body>
+	<!-- For any logic that requires more than one expression, we should use a computed property -->
+	<!-- Computed property calls by itself -->
+	<!-- Computed properties are cached based on their dependencies -->
+	<!-- A computed property will only re-evaluate when some of its dependencies have changed -->
+	<!-- Random numbers returned from the computed property remains the same irrespective of the number of times it is called.  -->
+	<!-- This means everytime it is called, the last value is updated for all.  -->
+	<!-- Whereas for a method, it’s a function, hence, everytime it is called it returns a different value. -->
+	<div id = "computed_props">
+		Firstname : <input type="text" v-model = "firstname" /><br/><br/>
+		Lastname: <input type="text" v-model = "lastname" /><br/><br/>
+		<h1>My name is {{firstname}} {{lastname}}</h1>
+		<h1>Using computed method : {{getfullname}}</h1>
+	</div>
+
+
+	<div id = "computed_property">
+	   <h1 style = "background-color:gray;">Random No from computed property: {{getrandomno}}</h1>
+	   <h1>Random No from method: {{getrandomno1()}}</h1>
+	   <h1>Random No from method : {{getrandomno1()}}</h1>
+	   <h1  style = "background-color:gray;">Random No from computed property: {{getrandomno}}</h1>
+	   <h1  style = "background-color:gray;">Random No from computed property: {{getrandomno}}</h1>
+	   <h1  style = "background-color:gray;">Random No from computed property: {{getrandomno}}</h1>
+	   <h1>Random No from method: {{getrandomno1()}}</h1>
+	   <h1>Random No from method: {{getrandomno1()}}</h1>
+	</div>
+
+	<div id = "computed_prop">
+		<input type="text" v-model = "fullname" />
+		<h1>{{firstName}}</h1>
+		<h1>{{lastName}}</h1>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el : '#computed_props',
+			data: {
+				firstname : "",
+				lastname : "",
+				birthyear: ""
+			},
+			computed:{
+				getfullname : function() {
+					return this.firstname + " " + this.lastname;
+				}
+			}
+		});
+
+
+		var vm1 = new Vue({
+            el: '#computed_property',
+            data: {
+               name : "helloworld"
+            },
+            methods: {
+               getrandomno1 : function() {
+                  return Math.random();
+               }
+            },
+            computed :{
+               getrandomno : function(){
+                  return Math.random();
+               }
+            }
+        });
+
+       var vm2 = new Vue({
+       	el: "#computed_prop",
+       	data: {
+       		firstName: 'Mainul',
+       		lastName: 'Hasan'
+       	},
+       	methods:{
+
+       	},
+       	computed:{
+       		fullname: {
+       			get: function(){
+       				return this.firstName + " " + this.lastName;
+       			},
+	       		set: function(name) {
+	       			var fname = name.split(" ");
+	       			console.log(fname);
+	       			this.firstName = fname[0];
+	       			this.lastName = fname[1];
+	       		}
+       		}
+       	}
+       });
+	</script>
+</body>
+</html>

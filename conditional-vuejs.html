@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Conditional in Vue JS</title>
+</head>
+<body>
+	<div id = "app">
+		<blog-post 
+			v-for = "post in posts" 
+			v-bind:key = "post.id" 
+			v-bind:title = "post.title"
+			v-bind:href = "post.href"
+		></blog-post>
+	</div>
+
+	<div id = "blog-post">
+		<blog 
+			v-for = "post in posts"
+			v-bind:key = "post.id"
+			v-bind:post = "post"
+		></blog>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script type="text/javascript">
+		Vue.component('blog-post', {
+			template: '<a></a>'
+		});
+
+		new Vue({
+			el : '#app',
+			data : {
+				posts : [
+					{ id : 1, title : 'My juourney with Vue', href : 'www.google.com'},
+					{ id : 2, title : 'Blogging with Vue', href : 'www.google.com'},
+					{ id : 3, title : 'Why Vue is so fun', href : 'www.google.com'}
+				]
+			}
+		});
+
+		Vue.component('blog', {
+			props : ['post'],
+			template : 
+			 `<div class = "blog">
+			 	<h3> {{ post.title }} </h3>
+			 	<div v-html = "post.content"></div>
+			 </div>`
+		});
+
+	  new Vue({ el : '#blog-post' }); 
+	</script>
+</body>
+</html>
